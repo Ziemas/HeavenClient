@@ -28,7 +28,9 @@
 
 #include "../../Net/Packets/LoginPackets.h"
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #ifdef USE_NX
 #include <nlnx/nx.hpp>
@@ -90,21 +92,21 @@ namespace ms
 		account = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::JAMBALAYA, Color::Name::SMALT, 0.75f, Rectangle<int16_t>(textbox_pos, textbox_pos + textbox_dim), textbox_limit);
 
 		account.set_key_callback
-		(
-			KeyAction::Id::TAB, [&]
-			{
-				account.set_state(Textfield::State::NORMAL);
-				password.set_state(Textfield::State::FOCUSED);
-			}
-		);
+				(
+						KeyAction::Id::TAB, [&]
+						{
+							account.set_state(Textfield::State::NORMAL);
+							password.set_state(Textfield::State::FOCUSED);
+						}
+				);
 
 		account.set_enter_callback
-		(
-			[&](std::string msg)
-			{
-				login();
-			}
-		);
+				(
+						[&](std::string msg)
+						{
+							login();
+						}
+				);
 
 		accountbg = Title["ID"];
 #pragma endregion
@@ -115,21 +117,21 @@ namespace ms
 		password = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::JAMBALAYA, Color::Name::PRUSSIANBLUE, 0.85f, Rectangle<int16_t>(textbox_pos, textbox_pos + textbox_dim), textbox_limit);
 
 		password.set_key_callback
-		(
-			KeyAction::Id::TAB, [&]
-			{
-				account.set_state(Textfield::State::FOCUSED);
-				password.set_state(Textfield::State::NORMAL);
-			}
-		);
+				(
+						KeyAction::Id::TAB, [&]
+						{
+							account.set_state(Textfield::State::FOCUSED);
+							password.set_state(Textfield::State::NORMAL);
+						}
+				);
 
 		password.set_enter_callback
-		(
-			[&](std::string msg)
-			{
-				login();
-			}
-		);
+				(
+						[&](std::string msg)
+						{
+							login();
+						}
+				);
 
 		password.set_cryptchar('*');
 		passwordbg = Title["PW"];
@@ -141,8 +143,7 @@ namespace ms
 		{
 			account.change_text(Setting<DefaultAccount>::get().load());
 			password.set_state(Textfield::State::FOCUSED);
-		}
-		else
+		} else
 		{
 			account.set_state(Textfield::State::FOCUSED);
 		}
@@ -249,7 +250,9 @@ namespace ms
 				return;
 		}
 
+		#ifdef _WIN32
 		ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
+		#endif
 	}
 
 	Button::State UILogin::button_pressed(uint16_t id)

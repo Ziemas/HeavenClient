@@ -131,7 +131,8 @@ namespace ms
 		buttons[Buttons::RIGHT] = std::make_unique<MapleButton>(RaceSelect["rightArrow"], Point<int16_t>(718, 458));
 
 		for (size_t i = 0; i <= Buttons::CLASS0; i++)
-			buttons[Buttons::CLASS0 + i] = std::make_unique<AreaButton>(get_class_pos(i), class_normal[0][true].get_dimensions());
+			buttons[Buttons::CLASS0 + i] = std::make_unique<AreaButton>(get_class_pos(i),
+																		class_normal[0][true].get_dimensions());
 
 		index_shift = 0;
 		selected_index = 0;
@@ -177,7 +178,7 @@ namespace ms
 		class_details[corrected_index].draw(position);
 		class_title[corrected_index].draw(position);
 
-		for (nl::node node : hotlist)
+		for (const auto &node : hotlist)
 		{
 			if (node.get_integer() == selected_class)
 			{
@@ -190,7 +191,7 @@ namespace ms
 			}
 		}
 
-		for (nl::node node : newlist)
+		for (const auto &node : newlist)
 		{
 			if (node.get_integer() == selected_class)
 			{
@@ -207,7 +208,7 @@ namespace ms
 			auto found_class = class_isdisabled[cur_class] ? class_disabled : class_normal;
 			found_class[cur_class][mouseover[i]].draw(position + button_pos);
 
-			for (nl::node node : hotlist)
+			for (const auto &node : hotlist)
 			{
 				if (node.get_integer() == class_index[i])
 				{
@@ -216,7 +217,7 @@ namespace ms
 				}
 			}
 
-			for (nl::node node : newlist)
+			for (const auto &node : newlist)
 			{
 				if (node.get_integer() == class_index[i])
 				{
@@ -251,7 +252,7 @@ namespace ms
 
 	Cursor::State UIRaceSelect::send_cursor(bool clicked, Point<int16_t> cursorpos)
 	{
-		for (auto& btit : buttons)
+		for (auto &btit : buttons)
 		{
 			if (btit.second->is_active() && btit.second->bounds(position).contains(cursorpos))
 			{
@@ -263,23 +264,20 @@ namespace ms
 						mouseover[btit.first - Buttons::CLASS0] = true;
 
 					btit.second->set_state(Button::State::MOUSEOVER);
-				}
-				else if (btit.second->get_state() == Button::State::MOUSEOVER)
+				} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 				{
 					if (clicked)
 					{
 						Sound(Sound::Name::BUTTONCLICK).play();
 
 						btit.second->set_state(button_pressed(btit.first));
-					}
-					else
+					} else
 					{
 						if (btit.first >= Buttons::CLASS0)
 							mouseover[btit.first - Buttons::CLASS0] = true;
 					}
 				}
-			}
-			else if (btit.second->get_state() == Button::State::MOUSEOVER)
+			} else if (btit.second->get_state() == Button::State::MOUSEOVER)
 			{
 				if (btit.first >= Buttons::CLASS0)
 					mouseover[btit.first - Buttons::CLASS0] = false;
@@ -298,18 +296,15 @@ namespace ms
 			if (escape)
 			{
 				show_charselect();
-			}
-			else if (keycode == KeyAction::Id::LEFT || keycode == KeyAction::Id::DOWN)
+			} else if (keycode == KeyAction::Id::LEFT || keycode == KeyAction::Id::DOWN)
 			{
 				if (buttons[Buttons::LEFT]->get_state() == Button::State::NORMAL)
 					button_pressed(Buttons::LEFT);
-			}
-			else if (keycode == KeyAction::Id::RIGHT || keycode == KeyAction::Id::UP)
+			} else if (keycode == KeyAction::Id::RIGHT || keycode == KeyAction::Id::UP)
 			{
 				if (buttons[Buttons::RIGHT]->get_state() == Button::State::NORMAL)
 					button_pressed(Buttons::RIGHT);
-			}
-			else if (keycode == KeyAction::Id::RETURN)
+			} else if (keycode == KeyAction::Id::RETURN)
 			{
 				button_pressed(Buttons::MAKE);
 			}
@@ -325,7 +320,7 @@ namespace ms
 	{
 		nl::node ForbiddenName = nl::nx::etc["ForbiddenName.img"];
 
-		for (std::string forbiddenName : ForbiddenName)
+		for (auto forbiddenName : ForbiddenName)
 		{
 			std::string lName = to_lower(name);
 			std::string fName = to_lower(forbiddenName);
@@ -343,13 +338,11 @@ namespace ms
 		{
 			if (auto explorercreation = UI::get().get_element<UIExplorerCreation>())
 				explorercreation->send_naming_result(nameused);
-		}
-		else if (selected_class == Classes::CYGNUSKNIGHTS)
+		} else if (selected_class == Classes::CYGNUSKNIGHTS)
 		{
 			if (auto cygnuscreation = UI::get().get_element<UICygnusCreation>())
 				cygnuscreation->send_naming_result(nameused);
-		}
-		else if (selected_class == Classes::ARAN)
+		} else if (selected_class == Classes::ARAN)
 		{
 			if (auto arancreation = UI::get().get_element<UIAranCreation>())
 				arancreation->send_naming_result(nameused);
@@ -363,8 +356,7 @@ namespace ms
 			show_charselect();
 
 			return Button::State::NORMAL;
-		}
-		else if (buttonid == Buttons::MAKE)
+		} else if (buttonid == Buttons::MAKE)
 		{
 			uint16_t corrected_index = get_corrected_class_index(selected_class);
 
@@ -388,8 +380,7 @@ namespace ms
 			UI::get().emplace<UIClassConfirm>(selected_class, class_isdisabled[corrected_index], okhandler);
 
 			return Button::State::NORMAL;
-		}
-		else if (buttonid == Buttons::LEFT)
+		} else if (buttonid == Buttons::LEFT)
 		{
 			uint16_t new_index = selected_index - 1;
 
@@ -407,8 +398,7 @@ namespace ms
 			select_class(new_index);
 
 			return Button::State::IDENTITY;
-		}
-		else if (buttonid == Buttons::RIGHT)
+		} else if (buttonid == Buttons::RIGHT)
 		{
 			uint16_t new_index = selected_index + 1;
 			uint16_t selected = class_index[selected_index - index_shift];
@@ -427,16 +417,14 @@ namespace ms
 			select_class(new_index);
 
 			return Button::State::IDENTITY;
-		}
-		else if (buttonid >= Buttons::CLASS0)
+		} else if (buttonid >= Buttons::CLASS0)
 		{
 			uint16_t index = buttonid - Buttons::CLASS0 + index_shift;
 
 			select_class(index);
 
 			return Button::State::IDENTITY;
-		}
-		else
+		} else
 		{
 			return Button::State::DISABLED;
 		}
@@ -485,8 +473,7 @@ namespace ms
 
 				Music(LoginMusicNewtro).play();
 			}
-		}
-		else
+		} else
 		{
 			button_pressed(Buttons::MAKE);
 		}

@@ -35,7 +35,9 @@
 
 namespace ms
 {
-	UIItemInventory::UIItemInventory(const Inventory& invent) : UIDragElement<PosINV>(), inventory(invent), ignore_tooltip(false), tab(InventoryType::Id::EQUIP), sort_enabled(false)
+	UIItemInventory::UIItemInventory(const Inventory &invent)
+			: UIDragElement<PosINV>(), inventory(invent), ignore_tooltip(false), tab(InventoryType::Id::EQUIP),
+			  sort_enabled(false)
 	{
 		nl::node Item = nl::nx::ui["UIWindow2.img"]["Item"];
 
@@ -109,27 +111,27 @@ namespace ms
 		maplepointslabel = Text(Text::Font::A11M, Text::Alignment::RIGHT, Color::Name::BLACK);
 		maplepointslabel.change_text("0"); // TODO: Implement
 
-		slotrange[InventoryType::Id::EQUIPPED] = { 1, 24 };
-		slotrange[InventoryType::Id::EQUIP] = { 1, 24 };
-		slotrange[InventoryType::Id::USE] = { 1, 24 };
-		slotrange[InventoryType::Id::SETUP] = { 1, 24 };
-		slotrange[InventoryType::Id::ETC] = { 1, 24 };
-		slotrange[InventoryType::Id::CASH] = { 1, 24 };
+		slotrange[InventoryType::Id::EQUIPPED] = {1, 24};
+		slotrange[InventoryType::Id::EQUIP] = {1, 24};
+		slotrange[InventoryType::Id::USE] = {1, 24};
+		slotrange[InventoryType::Id::SETUP] = {1, 24};
+		slotrange[InventoryType::Id::ETC] = {1, 24};
+		slotrange[InventoryType::Id::CASH] = {1, 24};
 
 		slider = Slider(
-			Slider::Type::DEFAULT_SILVER, Range<int16_t>(50, 245), 152, 6, 1 + inventory.get_slotmax(tab) / COLUMNS,
-			[&](bool upwards)
-			{
-				int16_t shift = upwards ? -COLUMNS : COLUMNS;
-				bool above = slotrange[tab].first + shift > 0;
-				bool below = slotrange[tab].second + shift < inventory.get_slotmax(tab) + 1 + COLUMNS;
-
-				if (above && below)
+				Slider::Type::DEFAULT_SILVER, Range<int16_t>(50, 245), 152, 6, 1 + inventory.get_slotmax(tab) / COLUMNS,
+				[&](bool upwards)
 				{
-					slotrange[tab].first += shift;
-					slotrange[tab].second += shift;
+					int16_t shift = upwards ? -COLUMNS : COLUMNS;
+					bool above = slotrange[tab].first + shift > 0;
+					bool below = slotrange[tab].second + shift < inventory.get_slotmax(tab) + 1 + COLUMNS;
+
+					if (above && below)
+					{
+						slotrange[tab].first += shift;
+						slotrange[tab].second += shift;
+					}
 				}
-			}
 		);
 
 		set_full(false);
@@ -152,8 +154,7 @@ namespace ms
 
 			mesolabel.draw(mesolabel_pos + Point<int16_t>(3, 70));
 			maplepointslabel.draw(maplepointslabel_pos + Point<int16_t>(181, 53));
-		}
-		else
+		} else
 		{
 			backgrnd.draw(position);
 			backgrnd2.draw(position);
@@ -177,12 +178,11 @@ namespace ms
 
 			if (icons.find(i) != icons.end())
 			{
-				auto& icon = icons.at(i);
+				auto &icon = icons.at(i);
 
 				if (icon && i >= firstslot && i <= lastslot)
 					icon->draw(position + slotpos);
-			}
-			else
+			} else
 			{
 				if (i > numslots && i <= lastslot)
 					disabled.draw(position + slotpos);
@@ -231,15 +231,14 @@ namespace ms
 
 			const bool untradable = ItemData::get(item_id).is_untradable();
 			const bool cashitem = ItemData::get(item_id).is_cashitem();
-			const Texture& texture = ItemData::get(item_id).get_icon(false);
+			const Texture &texture = ItemData::get(item_id).get_icon(false);
 			EquipSlot::Id eqslot = inventory.find_equipslot(item_id);
 
 			icons[slot] = std::make_unique<Icon>(
-				std::make_unique<ItemIcon>(*this, tab, eqslot, slot, item_id, count, untradable, cashitem),
-				texture, count
-				);
-		}
-		else if (icons.count(slot))
+					std::make_unique<ItemIcon>(*this, tab, eqslot, slot, item_id, count, untradable, cashitem),
+					texture, count
+			);
+		} else if (icons.count(slot))
 		{
 			icons.erase(slot);
 		}
@@ -383,7 +382,7 @@ namespace ms
 		}
 	}
 
-	bool UIItemInventory::send_icon(const Icon& icon, Point<int16_t> cursorpos)
+	bool UIItemInventory::send_icon(const Icon &icon, Point<int16_t> cursorpos)
 	{
 		int16_t slot = slot_by_position(cursorpos - position);
 
@@ -397,8 +396,7 @@ namespace ms
 			{
 				eqslot = inventory.find_equipslot(item_id);
 				equip = true;
-			}
-			else
+			} else
 			{
 				eqslot = EquipSlot::Id::NONE;
 				equip = false;
@@ -438,7 +436,7 @@ namespace ms
 		}
 
 		int16_t slot = slot_by_position(cursor_relative);
-		Icon* icon = get_icon(slot);
+		Icon *icon = get_icon(slot);
 		bool is_icon = icon && is_visible(slot);
 
 		if (is_icon)
@@ -452,21 +450,18 @@ namespace ms
 				clear_tooltip();
 
 				return Cursor::State::GRABBING;
-			}
-			else if (!ignore_tooltip)
+			} else if (!ignore_tooltip)
 			{
 				show_item(slot);
 
 				return Cursor::State::CANGRAB;
-			}
-			else
+			} else
 			{
 				ignore_tooltip = false;
 
 				return Cursor::State::CANGRAB;
 			}
-		}
-		else
+		} else
 		{
 			clear_tooltip();
 
@@ -481,8 +476,7 @@ namespace ms
 			if (escape)
 			{
 				toggle_active();
-			}
-			else if (keycode == KeyAction::Id::TAB)
+			} else if (keycode == KeyAction::Id::TAB)
 			{
 				clear_tooltip();
 
@@ -593,16 +587,14 @@ namespace ms
 				buttons[Buttons::BT_SORT_SM]->set_active(true);
 				buttons[Buttons::BT_GATHER]->set_active(false);
 				buttons[Buttons::BT_GATHER_SM]->set_active(false);
-			}
-			else
+			} else
 			{
 				buttons[Buttons::BT_SORT]->set_active(false);
 				buttons[Buttons::BT_SORT_SM]->set_active(false);
 				buttons[Buttons::BT_GATHER]->set_active(false);
 				buttons[Buttons::BT_GATHER_SM]->set_active(true);
 			}
-		}
-		else
+		} else
 		{
 			if (sort_enabled)
 			{
@@ -610,8 +602,7 @@ namespace ms
 				buttons[Buttons::BT_SORT_SM]->set_active(false);
 				buttons[Buttons::BT_GATHER]->set_active(false);
 				buttons[Buttons::BT_GATHER_SM]->set_active(false);
-			}
-			else
+			} else
 			{
 				buttons[Buttons::BT_SORT]->set_active(false);
 				buttons[Buttons::BT_SORT_SM]->set_active(false);
@@ -655,8 +646,7 @@ namespace ms
 		if (tab == InventoryType::Id::EQUIP)
 		{
 			UI::get().show_equip(Tooltip::Parent::ITEMINVENTORY, slot);
-		}
-		else
+		} else
 		{
 			int32_t item_id = inventory.get_item_id(tab, slot);
 			UI::get().show_item(Tooltip::Parent::ITEMINVENTORY, item_id);
@@ -685,20 +675,22 @@ namespace ms
 
 	bool UIItemInventory::can_wear_equip(int16_t slot) const
 	{
-		const Player& player = Stage::get().get_player();
-		const CharStats& stats = player.get_stats();
-		const CharLook& look = player.get_look();
+		const Player &player = Stage::get().get_player();
+		const CharStats &stats = player.get_stats();
+		const CharLook &look = player.get_look();
 		const bool alerted = look.get_alerted();
 
 		if (alerted)
 		{
-			UI::get().emplace<UIOk>("You cannot complete this action right now.\\nEvade the attack and try again.", [](bool) {});
+			UI::get().emplace<UIOk>("You cannot complete this action right now.\\nEvade the attack and try again.",
+									[](bool)
+									{});
 			return false;
 		}
 
 		const int32_t item_id = inventory.get_item_id(InventoryType::Id::EQUIP, slot);
-		const EquipData& equipdata = EquipData::get(item_id);
-		const ItemData& itemdata = equipdata.get_itemdata();
+		const EquipData &equipdata = EquipData::get(item_id);
+		const ItemData &itemdata = equipdata.get_itemdata();
 
 		const int8_t reqGender = itemdata.get_gender();
 		const bool female = stats.get_female();
@@ -738,7 +730,8 @@ namespace ms
 
 		if (!stats.get_job().is_sub_job(reqJOB))
 		{
-			UI::get().emplace<UIOk>("Your current job\\ncannot equip the selected item.", [](bool) {});
+			UI::get().emplace<UIOk>("Your current job\\ncannot equip the selected item.", [](bool)
+			{});
 			return false;
 		}
 
@@ -766,7 +759,9 @@ namespace ms
 
 		if (i > 0)
 		{
-			UI::get().emplace<UIOk>("Your stats are too low to equip this item\\nor you do not meet the job requirement.", [](bool) {});
+			UI::get().emplace<UIOk>(
+					"Your stats are too low to equip this item\\nor you do not meet the job requirement.", [](bool)
+					{});
 			return false;
 		}
 
@@ -781,7 +776,8 @@ namespace ms
 		if (xoff < 1 || xoff > 143 || yoff < 1)
 			return 0;
 
-		int16_t slot = (full_enabled ? 1 : slotrange.at(tab).first) + (xoff / ICON_WIDTH) + COLUMNS * (yoff / ICON_HEIGHT);
+		int16_t slot =
+				(full_enabled ? 1 : slotrange.at(tab).first) + (xoff / ICON_WIDTH) + COLUMNS * (yoff / ICON_HEIGHT);
 
 		return is_visible(slot) ? slot : 0;
 	}
@@ -791,9 +787,9 @@ namespace ms
 		int16_t absslot = slot - slotrange.at(tab).first;
 
 		return Point<int16_t>(
-			10 + (absslot % COLUMNS) * ICON_WIDTH,
-			51 + (absslot / COLUMNS) * ICON_HEIGHT
-			);
+				10 + (absslot % COLUMNS) * ICON_WIDTH,
+				51 + (absslot / COLUMNS) * ICON_HEIGHT
+		);
 	}
 
 	Point<int16_t> UIItemInventory::get_full_slotpos(int16_t slot) const
@@ -804,9 +800,9 @@ namespace ms
 		int16_t adj_x = div.quot * COLUMNS * ICON_WIDTH;
 
 		return Point<int16_t>(
-			10 + adj_x + (new_slot % COLUMNS) * ICON_WIDTH,
-			51 + (new_slot / COLUMNS) * ICON_HEIGHT
-			);
+				10 + adj_x + (new_slot % COLUMNS) * ICON_WIDTH,
+				51 + (new_slot / COLUMNS) * ICON_HEIGHT
+		);
 	}
 
 	Point<int16_t> UIItemInventory::get_tabpos(InventoryType::Id tb) const
@@ -843,7 +839,7 @@ namespace ms
 		}
 	}
 
-	Icon* UIItemInventory::get_icon(int16_t slot)
+	Icon *UIItemInventory::get_icon(int16_t slot)
 	{
 		auto iter = icons.find(slot);
 
@@ -865,8 +861,7 @@ namespace ms
 			buttons[Buttons::BT_FULL_SM]->set_active(false);
 			buttons[Buttons::BT_SMALL]->set_active(false);
 			buttons[Buttons::BT_SMALL_SM]->set_active(true);
-		}
-		else
+		} else
 		{
 			dimension = bg_dimensions;
 
@@ -915,7 +910,8 @@ namespace ms
 		return Icon::IconType::ITEM;
 	}
 
-	UIItemInventory::ItemIcon::ItemIcon(const UIItemInventory& parent, InventoryType::Id st, EquipSlot::Id eqs, int16_t s, int32_t iid, int16_t c, bool u, bool cash) : parent(parent)
+	UIItemInventory::ItemIcon::ItemIcon(const UIItemInventory &parent, InventoryType::Id st, EquipSlot::Id eqs,
+										int16_t s, int32_t iid, int16_t c, bool u, bool cash) : parent(parent)
 	{
 		sourcetab = st;
 		eqsource = eqs;
@@ -928,15 +924,15 @@ namespace ms
 
 	void UIItemInventory::ItemIcon::drop_on_stage() const
 	{
-		constexpr char* dropmessage = "How many will you drop?";
-		constexpr char* untradablemessage = "This item can't be taken back once thrown away.\\nWill you still drop it?";
-		constexpr char* cashmessage = "You can't drop this item.";
+		constexpr char *dropmessage = "How many will you drop?";
+		constexpr char *untradablemessage = "This item can't be taken back once thrown away.\\nWill you still drop it?";
+		constexpr char *cashmessage = "You can't drop this item.";
 
 		if (cashitem)
 		{
-			UI::get().emplace<UIOk>(cashmessage, [](bool) {});
-		}
-		else
+			UI::get().emplace<UIOk>(cashmessage, [](bool)
+			{});
+		} else
 		{
 			if (untradable)
 			{
@@ -947,8 +943,7 @@ namespace ms
 						if (count <= 1)
 						{
 							MoveItemPacket(sourcetab, source, 0, 1).dispatch();
-						}
-						else
+						} else
 						{
 							auto onenter = [&](int32_t qty)
 							{
@@ -961,14 +956,12 @@ namespace ms
 				};
 
 				UI::get().emplace<UIYesNo>(untradablemessage, onok);
-			}
-			else
+			} else
 			{
 				if (count <= 1)
 				{
 					MoveItemPacket(sourcetab, source, 0, 1).dispatch();
-				}
-				else
+				} else
 				{
 					auto onenter = [&](int32_t qty)
 					{

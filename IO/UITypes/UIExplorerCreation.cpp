@@ -73,27 +73,43 @@ namespace ms
 			if (i >= 2)
 				f++;
 
-			sprites_lookboard.emplace_back(CustomizeChar["avatarSel"][i]["normal"], Point<int16_t>(497, 197 + (f * 18)));
+			sprites_lookboard.emplace_back(CustomizeChar["avatarSel"][i]["normal"],
+										   Point<int16_t>(497, 197 + (f * 18)));
 		}
 
-		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"], Point<int16_t>(487, 109));
-		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"], Point<int16_t>(485, 109));
-		buttons[Buttons::BT_CHARC_FACEL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (0 * 18)));
-		buttons[Buttons::BT_CHARC_FACER] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (0 * 18)));
-		buttons[Buttons::BT_CHARC_HAIRL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (1 * 18)));
-		buttons[Buttons::BT_CHARC_HAIRR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (1 * 18)));
-		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (3 * 18)));
-		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (3 * 18)));
-		buttons[Buttons::BT_CHARC_TOPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (4 * 18)));
-		buttons[Buttons::BT_CHARC_TOPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (4 * 18)));
-		buttons[Buttons::BT_CHARC_SHOESL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (5 * 18)));
-		buttons[Buttons::BT_CHARC_SHOESR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (5 * 18)));
-		buttons[Buttons::BT_CHARC_WEPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"], Point<int16_t>(552, 198 + (6 * 18)));
-		buttons[Buttons::BT_CHARC_WEPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"], Point<int16_t>(684, 198 + (6 * 18)));
+		buttons[Buttons::BT_CHARC_GENDER_M] = std::make_unique<MapleButton>(genderSelect["male"],
+																			Point<int16_t>(487, 109));
+		buttons[Buttons::BT_CHARC_GEMDER_F] = std::make_unique<MapleButton>(genderSelect["female"],
+																			Point<int16_t>(485, 109));
+		buttons[Buttons::BT_CHARC_FACEL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		 Point<int16_t>(552, 198 + (0 * 18)));
+		buttons[Buttons::BT_CHARC_FACER] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		 Point<int16_t>(684, 198 + (0 * 18)));
+		buttons[Buttons::BT_CHARC_HAIRL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		 Point<int16_t>(552, 198 + (1 * 18)));
+		buttons[Buttons::BT_CHARC_HAIRR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		 Point<int16_t>(684, 198 + (1 * 18)));
+		buttons[Buttons::BT_CHARC_SKINL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		 Point<int16_t>(552, 198 + (3 * 18)));
+		buttons[Buttons::BT_CHARC_SKINR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		 Point<int16_t>(684, 198 + (3 * 18)));
+		buttons[Buttons::BT_CHARC_TOPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		Point<int16_t>(552, 198 + (4 * 18)));
+		buttons[Buttons::BT_CHARC_TOPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		Point<int16_t>(684, 198 + (4 * 18)));
+		buttons[Buttons::BT_CHARC_SHOESL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		  Point<int16_t>(552, 198 + (5 * 18)));
+		buttons[Buttons::BT_CHARC_SHOESR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		  Point<int16_t>(684, 198 + (5 * 18)));
+		buttons[Buttons::BT_CHARC_WEPL] = std::make_unique<MapleButton>(CustomizeChar["BtLeft"],
+																		Point<int16_t>(552, 198 + (6 * 18)));
+		buttons[Buttons::BT_CHARC_WEPR] = std::make_unique<MapleButton>(CustomizeChar["BtRight"],
+																		Point<int16_t>(684, 198 + (6 * 18)));
 
 		for (size_t i = 0; i <= 7; i++)
 		{
-			buttons[Buttons::BT_CHARC_HAIRC0 + i] = std::make_unique<MapleButton>(CustomizeChar["hairSelect"][i], Point<int16_t>(549 + (i * 15), 234));
+			buttons[Buttons::BT_CHARC_HAIRC0 + i] = std::make_unique<MapleButton>(CustomizeChar["hairSelect"][i],
+																				  Point<int16_t>(549 + (i * 15), 234));
 			buttons[Buttons::BT_CHARC_HAIRC0 + i]->set_active(false);
 		}
 
@@ -111,10 +127,12 @@ namespace ms
 		buttons[Buttons::BT_CHARC_WEPR]->set_active(false);
 
 		buttons[Buttons::BT_CHARC_OK] = std::make_unique<MapleButton>(CustomizeChar["BtYes"], Point<int16_t>(514, 394));
-		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"], Point<int16_t>(590, 394));
+		buttons[Buttons::BT_CHARC_CANCEL] = std::make_unique<MapleButton>(CustomizeChar["BtNo"],
+																		  Point<int16_t>(590, 394));
 
 		nameboard = CustomizeChar["charName"];
-		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE, Rectangle<int16_t>(Point<int16_t>(522, 195), Point<int16_t>(630, 253)), 12);
+		namechar = Textfield(Text::Font::A13M, Text::Alignment::LEFT, Color::Name::WHITE,
+							 Rectangle<int16_t>(Point<int16_t>(522, 195), Point<int16_t>(630, 253)), 12);
 
 		sprites.emplace_back(frame, Point<int16_t>(400, 300));
 		sprites.emplace_back(Common["frame"], Point<int16_t>(400, 300));
@@ -125,18 +143,18 @@ namespace ms
 		namechar.set_state(Textfield::DISABLED);
 
 		namechar.set_enter_callback(
-			[&](std::string)
-			{
-				button_pressed(Buttons::BT_CHARC_OK);
-			}
+				[&](std::string)
+				{
+					button_pressed(Buttons::BT_CHARC_OK);
+				}
 		);
 
 		namechar.set_key_callback(
-			KeyAction::Id::ESCAPE,
-			[&]()
-			{
-				button_pressed(Buttons::BT_CHARC_CANCEL);
-			}
+				KeyAction::Id::ESCAPE,
+				[&]()
+				{
+					button_pressed(Buttons::BT_CHARC_CANCEL);
+				}
 		);
 
 		facename = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::BLACK);
@@ -157,8 +175,7 @@ namespace ms
 			{
 				f = true;
 				CharGender = mkinfo["CharFemale"];
-			}
-			else
+			} else
 			{
 				f = false;
 				CharGender = mkinfo["CharMale"];
@@ -230,8 +247,7 @@ namespace ms
 				{
 					for (size_t f = 0; f <= 4; f++)
 						sprites_gender_select[i].draw(position + Point<int16_t>(0, 24 * f), inter);
-				}
-				else
+				} else
 				{
 					sprites_gender_select[i].draw(position, inter);
 				}
@@ -240,14 +256,13 @@ namespace ms
 			UIElement::draw(inter);
 
 			newchar.draw(Point<int16_t>(394, 339), inter);
-		}
-		else
+		} else
 		{
 			if (!charSet)
 			{
 				UIElement::draw_sprites(inter);
 
-				for (auto& sprite : sprites_lookboard)
+				for (auto &sprite : sprites_lookboard)
 					sprite.draw(position, inter);
 
 				facename.draw(Point<int16_t>(625, 193 + (0 * 18)));
@@ -260,8 +275,7 @@ namespace ms
 				newchar.draw(Point<int16_t>(394, 339), inter);
 
 				UIElement::draw_buttons(inter);
-			}
-			else
+			} else
 			{
 				if (!named)
 				{
@@ -273,8 +287,7 @@ namespace ms
 					newchar.draw(Point<int16_t>(394, 339), inter);
 
 					UIElement::draw_buttons(inter);
-				}
-				else
+				} else
 				{
 					UIElement::draw_sprites(inter);
 
@@ -282,7 +295,7 @@ namespace ms
 
 					UIElement::draw_buttons(inter);
 
-					for (auto& sprite : sprites_keytype)
+					for (auto &sprite : sprites_keytype)
 						sprite.draw(position, inter);
 				}
 			}
@@ -295,30 +308,27 @@ namespace ms
 	{
 		if (!gender)
 		{
-			for (auto& sprite : sprites_gender_select)
+			for (auto &sprite : sprites_gender_select)
 				sprite.update();
 
 			newchar.update(Constants::TIMESTEP);
-		}
-		else
+		} else
 		{
 			if (!charSet)
 			{
-				for (auto& sprite : sprites_lookboard)
+				for (auto &sprite : sprites_lookboard)
 					sprite.update();
 
 				newchar.update(Constants::TIMESTEP);
-			}
-			else
+			} else
 			{
 				if (!named)
 				{
 					namechar.update(position);
 					newchar.update(Constants::TIMESTEP);
-				}
-				else
+				} else
 				{
-					for (auto& sprite : sprites_keytype)
+					for (auto &sprite : sprites_keytype)
 						sprite.update();
 
 					namechar.set_state(Textfield::State::DISABLED);
@@ -342,8 +352,7 @@ namespace ms
 					namechar.set_state(Textfield::State::FOCUSED);
 
 					return Cursor::State::CLICKING;
-				}
-				else
+				} else
 				{
 					return Cursor::State::IDLE;
 				}
@@ -403,8 +412,7 @@ namespace ms
 				};
 
 				UI::get().emplace<UIKeySelect>(onok, true);
-			}
-			else
+			} else
 			{
 				auto onok = [&]()
 				{
@@ -805,15 +813,14 @@ namespace ms
 		wepname.change_text(get_equipname(EquipSlot::Id::WEAPON));
 	}
 
-	const std::string& UIExplorerCreation::get_equipname(EquipSlot::Id slot) const
+	const std::string &UIExplorerCreation::get_equipname(EquipSlot::Id slot) const
 	{
 		if (int32_t item_id = newchar.get_equips().get_equip(slot))
 		{
 			return ItemData::get(item_id).get_name();
-		}
-		else
+		} else
 		{
-			static const std::string& nullstr = "Missing name.";
+			static const std::string &nullstr = "Missing name.";
 
 			return nullstr;
 		}

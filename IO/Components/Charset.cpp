@@ -37,9 +37,10 @@ namespace ms
 		}
 	}
 
-	Charset::Charset() : alignment(Charset::Alignment::LEFT) {}
+	Charset::Charset() : alignment(Charset::Alignment::LEFT)
+	{}
 
-	void Charset::draw(int8_t c, const DrawArgument& args) const
+	void Charset::draw(int8_t c, const DrawArgument &args) const
 	{
 		auto iter = chars.find(c);
 
@@ -54,7 +55,7 @@ namespace ms
 		return iter != chars.end() ? iter->second.width() : 0;
 	}
 
-	int16_t Charset::draw(const std::string& text, const DrawArgument& args) const
+	int16_t Charset::draw(const std::string &text, const DrawArgument &args) const
 	{
 		int16_t shift = 0;
 		int16_t total = 0;
@@ -101,7 +102,7 @@ namespace ms
 		return shift;
 	}
 
-	int16_t Charset::draw(const std::string& text, int16_t hspace, const DrawArgument& args) const
+	int16_t Charset::draw(const std::string &text, int16_t hspace, const DrawArgument &args) const
 	{
 		size_t length = text.size();
 		int16_t shift = 0;

@@ -61,10 +61,12 @@ namespace ms
 		clear_tooltip();
 
 		if (na_rect.contains(cursorpos))
-			UI::get().show_text(Tooltip::Parent::TEXT, "Warning: You may experience latency and connection issues when connecting to the NA server from Europe.");
+			UI::get().show_text(Tooltip::Parent::TEXT,
+								"Warning: You may experience latency and connection issues when connecting to the NA server from Europe.");
 
 		if (eu_rect.contains(cursorpos))
-			UI::get().show_text(Tooltip::Parent::TEXT, "Warning: You may experience latency and connection issues when connecting to the EU server from North America.");
+			UI::get().show_text(Tooltip::Parent::TEXT,
+								"Warning: You may experience latency and connection issues when connecting to the EU server from North America.");
 
 		return UIElement::send_cursor(clicked, cursorpos);
 	}

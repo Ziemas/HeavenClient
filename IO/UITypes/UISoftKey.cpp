@@ -414,8 +414,7 @@ namespace ms
 					if (ok_callback)
 						ok_callback(pic);
 				}
-			}
-			else
+			} else
 			{
 				clear_tooltip();
 				show_text("The PIC needs to be at least 6 characters long.");

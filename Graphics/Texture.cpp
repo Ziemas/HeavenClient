@@ -62,7 +62,7 @@ namespace ms
 		}
 	}
 
-	void Texture::draw(const DrawArgument& args) const
+	void Texture::draw(const DrawArgument &args) const
 	{
 		draw(args, Range<int16_t>(0, 0));
 	}

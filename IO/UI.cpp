@@ -118,8 +118,7 @@ namespace ms
 
 			uint8_t bgmvolume = Setting<BGMVolume>::get().load();
 			Music::set_bgmvolume(bgmvolume);
-		}
-		else
+		} else
 		{
 			// The window lost input focus
 			Sound::set_sfxvolume(0);
@@ -175,7 +174,8 @@ namespace ms
 
 	void UI::send_key(int32_t keycode, bool pressed)
 	{
-		if ((is_key_down[GLFW_KEY_LEFT_ALT] || is_key_down[GLFW_KEY_RIGHT_ALT]) && (is_key_down[GLFW_KEY_ENTER] || is_key_down[GLFW_KEY_KP_ENTER]))
+		if ((is_key_down[GLFW_KEY_LEFT_ALT] || is_key_down[GLFW_KEY_RIGHT_ALT]) &&
+			(is_key_down[GLFW_KEY_ENTER] || is_key_down[GLFW_KEY_KP_ENTER]))
 		{
 			Window::get().toggle_fullscreen();
 
@@ -213,15 +213,14 @@ namespace ms
 						}
 					}
 				}
-			}
-			else
+			} else
 			{
-				bool shift = is_key_down[keyboard.leftshiftcode()] || is_key_down[keyboard.rightshiftcode()] || caps_lock_enabled;
+				bool shift = is_key_down[keyboard.leftshiftcode()] || is_key_down[keyboard.rightshiftcode()] ||
+							 caps_lock_enabled;
 				Keyboard::Mapping mapping = keyboard.get_text_mapping(keycode, shift);
 				focusedtextfield->send_key(mapping.type, mapping.action, pressed);
 			}
-		}
-		else
+		} else
 		{
 			Keyboard::Mapping mapping = keyboard.get_mapping(keycode);
 
@@ -251,48 +250,39 @@ namespace ms
 			{
 				npctalk->send_key(mapping.action, pressed, escape);
 				sent = true;
-			}
-			else if (statusbar && statusbar->is_menu_active())
+			} else if (statusbar && statusbar->is_menu_active())
 			{
 				statusbar->send_key(mapping.action, pressed, escape);
 				sent = true;
-			}
-			else if (channel && channel->is_active() && mapping.action != KeyAction::Id::CHANGECHANNEL)
+			} else if (channel && channel->is_active() && mapping.action != KeyAction::Id::CHANGECHANNEL)
 			{
 				channel->send_key(mapping.action, pressed, escape);
 				sent = true;
-			}
-			else if (worldmap && worldmap->is_active() && mapping.action != KeyAction::Id::WORLDMAP)
+			} else if (worldmap && worldmap->is_active() && mapping.action != KeyAction::Id::WORLDMAP)
 			{
 				worldmap->send_key(mapping.action, pressed, escape);
 				sent = true;
-			}
-			else if (optionmenu && optionmenu->is_active())
+			} else if (optionmenu && optionmenu->is_active())
 			{
 				optionmenu->send_key(mapping.action, pressed, escape);
 				sent = true;
-			}
-			else if (shop && shop->is_active())
+			} else if (shop && shop->is_active())
 			{
 				shop->send_key(mapping.action, pressed, escape);
 				sent = true;
-			}
-			else if (joypad && joypad->is_active())
+			} else if (joypad && joypad->is_active())
 			{
 				joypad->send_key(mapping.action, pressed, escape);
 				sent = true;
-			}
-			else if (rank && rank->is_active())
+			} else if (rank && rank->is_active())
 			{
 				rank->send_key(mapping.action, pressed, escape);
 				sent = true;
-			}
-			else if (quit && quit->is_active())
+			} else if (quit && quit->is_active())
 			{
 				quit->send_key(mapping.action, pressed, escape);
 				sent = true;
-			}
-			else
+			} else
 			{
 				// All
 				if (escape || tab || enter || arrows)
@@ -300,11 +290,15 @@ namespace ms
 					// Login
 					types.emplace_back(UIElement::Type::WORLDSELECT);
 					types.emplace_back(UIElement::Type::CHARSELECT);
-					types.emplace_back(UIElement::Type::RACESELECT);			// No tab
-					types.emplace_back(UIElement::Type::CLASSCREATION);			// No tab (No arrows, but shouldn't send else where)
-					types.emplace_back(UIElement::Type::LOGINNOTICE);			// No tab (No arrows, but shouldn't send else where)
-					types.emplace_back(UIElement::Type::LOGINNOTICE_CONFIRM);	// No tab (No arrows, but shouldn't send else where)
-					types.emplace_back(UIElement::Type::LOGINWAIT);				// No tab (No arrows, but shouldn't send else where)
+					types.emplace_back(UIElement::Type::RACESELECT);            // No tab
+					types.emplace_back(
+							UIElement::Type::CLASSCREATION);            // No tab (No arrows, but shouldn't send else where)
+					types.emplace_back(
+							UIElement::Type::LOGINNOTICE);            // No tab (No arrows, but shouldn't send else where)
+					types.emplace_back(
+							UIElement::Type::LOGINNOTICE_CONFIRM);    // No tab (No arrows, but shouldn't send else where)
+					types.emplace_back(
+							UIElement::Type::LOGINWAIT);                // No tab (No arrows, but shouldn't send else where)
 				}
 
 				if (escape)
@@ -333,8 +327,7 @@ namespace ms
 
 					// Game
 					types.emplace_back(UIElement::Type::NOTICE);
-				}
-				else if (tab)
+				} else if (tab)
 				{
 					// Game
 					types.emplace_back(UIElement::Type::ITEMINVENTORY);
@@ -366,15 +359,13 @@ namespace ms
 						chatbar->send_key(mapping.action, pressed, escape);
 					else
 						state->send_key(mapping.type, mapping.action, pressed, escape);
-				}
-				else if (enter)
+				} else if (enter)
 				{
 					if (chatbar)
 						chatbar->send_key(mapping.action, pressed, escape);
 					else
 						state->send_key(mapping.type, mapping.action, pressed, escape);
-				}
-				else
+				} else
 				{
 					state->send_key(mapping.type, mapping.action, pressed, escape);
 				}
@@ -384,12 +375,12 @@ namespace ms
 		is_key_down[keycode] = pressed;
 	}
 
-	void UI::set_scrollnotice(const std::string& notice)
+	void UI::set_scrollnotice(const std::string &notice)
 	{
 		scrollingnotice.setnotice(notice);
 	}
 
-	void UI::focus_textfield(Textfield* tofocus)
+	void UI::focus_textfield(Textfield *tofocus)
 	{
 		if (focusedtextfield)
 			focusedtextfield->set_state(Textfield::State::NORMAL);
@@ -405,7 +396,7 @@ namespace ms
 		focusedtextfield = {};
 	}
 
-	void UI::drag_icon(Icon* icon)
+	void UI::drag_icon(Icon *icon)
 	{
 		state->drag_icon(icon);
 	}
@@ -430,7 +421,8 @@ namespace ms
 		state->show_item(parent, item_id);
 	}
 
-	void UI::show_skill(Tooltip::Parent parent, int32_t skill_id, int32_t level, int32_t masterlevel, int64_t expiration)
+	void
+	UI::show_skill(Tooltip::Parent parent, int32_t skill_id, int32_t level, int32_t masterlevel, int64_t expiration)
 	{
 		state->show_skill(parent, skill_id, level, masterlevel, expiration);
 	}
@@ -445,7 +437,7 @@ namespace ms
 		state->show_map(parent, name, description, mapid, bolded);
 	}
 
-	Keyboard& UI::get_keyboard()
+	Keyboard &UI::get_keyboard()
 	{
 		return keyboard;
 	}

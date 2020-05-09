@@ -49,10 +49,10 @@ namespace ms
 			"Quest.nx",
 			"Reactor.nx",
 			"Skill.nx",
-			"Sound.nx",		// From latest
+			"Sound.nx",	
 			"String.nx",
 			"TamingMob.nx",
-			"UI.nx"			// From latest
+			"UI.nx"			// From v209.2,
 		};
 
 		// Initialize NX

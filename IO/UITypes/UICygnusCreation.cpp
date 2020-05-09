@@ -111,18 +111,18 @@ namespace ms
 		namechar.set_state(Textfield::DISABLED);
 
 		namechar.set_enter_callback(
-			[&](std::string)
-			{
-				button_pressed(Buttons::BT_CHARC_OK);
-			}
+				[&](std::string)
+				{
+					button_pressed(Buttons::BT_CHARC_OK);
+				}
 		);
 
 		namechar.set_key_callback(
-			KeyAction::Id::ESCAPE,
-			[&]()
-			{
-				button_pressed(Buttons::BT_CHARC_CANCEL);
-			}
+				KeyAction::Id::ESCAPE,
+				[&]()
+				{
+					button_pressed(Buttons::BT_CHARC_CANCEL);
+				}
 		);
 
 		facename = Text(Text::Font::A11M, Text::Alignment::CENTER, Color::Name::BLACK);
