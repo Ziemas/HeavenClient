@@ -21,13 +21,13 @@
 
 namespace ms
 {
-	Text::Text(Font f, Alignment a, Color::Name c, Background b, const std::string &t, uint16_t mw, bool fm, int16_t la)
-			: font(f), alignment(a), color(c), background(b), maxwidth(mw), formatted(fm), line_adj(la)
+	Text::Text(Font f, Alignment a, Color::Name c, Background b, const std::string& t, uint16_t mw, bool fm, int16_t la)
+		: font(f), alignment(a), color(c), background(b), maxwidth(mw), formatted(fm), line_adj(la)
 	{
 		change_text(t);
 	}
 
-	Text::Text(Font f, Alignment a, Color::Name c, const std::string &t, uint16_t mw, bool fm, int16_t la) : Text(f, a,
+	Text::Text(Font f, Alignment a, Color::Name c, const std::string& t, uint16_t mw, bool fm, int16_t la) : Text(f, a,
 																												  c,
 																												  Background::NONE,
 																												  t, mw,
@@ -121,7 +121,7 @@ namespace ms
 		return text;
 	}
 
-	Text::Layout::Layout(const std::vector<Layout::Line> &l, const std::vector<int16_t> &a, int16_t w, int16_t h,
+	Text::Layout::Layout(const std::vector<Layout::Line>& l, const std::vector<int16_t>& a, int16_t w, int16_t h,
 						 int16_t ex, int16_t ey) : lines(l), advances(a), dimensions(w, h), endoffset(ex, ey)
 	{}
 

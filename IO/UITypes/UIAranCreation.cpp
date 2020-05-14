@@ -33,7 +33,9 @@
 #include "../../Net/Packets/CharCreationPackets.h"
 
 #ifdef USE_NX
+
 #include <nlnx/nx.hpp>
+
 #endif
 
 namespace ms
